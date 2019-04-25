@@ -10,7 +10,7 @@ RUN groupadd -r jetty && useradd -r -g jetty jetty
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get install python-software-properties && \
+RUN apt-get install -y python-software-properties && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get -y upgrade && \
