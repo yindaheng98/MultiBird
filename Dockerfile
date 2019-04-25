@@ -5,23 +5,17 @@ ENV REFRESHED_AT 2019-04-17
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
 
-RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+ENV JAVA_URL=https://javadl.oracle.com/webapps/download/AutoDL?BundleId=238719_478a62b7d4e34b78b671c754eaaf38ab
+
+RUN wget ${JAVA_URL} -O jre.tar.gz && \
+  mkdir /java && \
+  tar -zxvf jre.tar.gz -C /java && \
+  echo 'export JAVA_HOME=/java/jre1.8.0_211' >> /etc/profile && \
+  echo 'export CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib' >> /etc/profile && \
+  echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
 
 # Tweaks to give Apache/PHP write permissions to the app
 RUN groupadd -r jetty && useradd -r -g jetty jetty
-
-# Install packages
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
-  apt-get -y upgrade && \
-  apt-get install -y python-software-properties && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get -y upgrade && \
-  apt-get -y install oracle-java8-installer && \
-  apt-get install -y nodejs && \
-  apt-get install -y npm && \
-  apt-get -y autoremove
 
 # install jetty
 ENV JETTY_VERSION=9.4.14.v20181114
