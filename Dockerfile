@@ -57,4 +57,5 @@ EXPOSE 8080
 VOLUME  ["$JETTY_BASE/webapps"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/start.sh"]
+
 #nohup java -jar $JETTY_HOME/start.jar > log.file  2>&1 &
