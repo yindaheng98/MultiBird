@@ -17,12 +17,14 @@ RUN wget ${JAVA_URL} -O jre.tar.gz -q && \
   export PATH=$JAVA_HOME/bin:$PATH && \
   echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
 
+RUN echo $JAVA_HOME
+
 # Tweaks to give Apache/PHP write permissions to the app
 RUN groupadd -r jetty && useradd -r -g jetty jetty
 
 # install jetty
 ENV JETTY_VERSION=9.4.14.v20181114
-RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${JETTY_VERSION}/jetty-distribution-${JETTY_VERSION}.tar.gz -O jetty.tar.gz && \
+RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${JETTY_VERSION}/jetty-distribution-${JETTY_VERSION}.tar.gz -O jetty.tar.gz -q && \
   tar -zxvf jetty.tar.gz && \
   mv jetty-distribution-${JETTY_VERSION} jetty
 
