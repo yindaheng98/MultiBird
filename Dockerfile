@@ -17,9 +17,6 @@ ENV CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib
 ENV PATH=$JAVA_HOME/bin:$PATH
 RUN echo $JAVA_HOME
 
-# 创建jetty用户
-RUN groupadd -r jetty && useradd -r -g jetty jetty
-
 # 下jetty
 ENV JETTY_VERSION=9.4.14.v20181114
 RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${JETTY_VERSION}/jetty-distribution-${JETTY_VERSION}.tar.gz -O jetty.tar.gz -q && \
@@ -43,11 +40,11 @@ RUN mkdir -p "$TMPDIR" && \
 	chown -R jetty:jetty "$TMPDIR"
 
 WORKDIR $JETTY_BASE
-COPY docker-entrypoint.sh generate-jetty-start.sh /
+ADD supporting_files/docker-entrypoint.sh /docker-entrypoint.sh
+ADD supporting_files/generate-jetty-start.sh /generate-jetty-start.sh
 
 #TODO:兼容mattrayner/lamp的启动方式
 
-USER jetty
 EXPOSE 8080
 
 # Add volumes for the app
