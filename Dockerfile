@@ -5,6 +5,9 @@ ENV REFRESHED_AT 2019-04-17
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
 
+RUN useradd -r jetty && \
+    usermod -G staff jetty
+
 #装java
 ENV JAVA_URL=https://javadl.oracle.com/webapps/download/AutoDL?BundleId=238719_478a62b7d4e34b78b671c754eaaf38ab
 
@@ -27,8 +30,6 @@ RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${J
 ENV JETTY_HOME /jetty
 ENV PATH $JETTY_HOME/bin:$PATH
 
-RUN groupadd -r jetty && useradd -r -g jetty jetty
-
 # 初始化jettybase
 ENV JETTY_BASE /jettybase
 RUN mkdir -p "$JETTY_BASE"
@@ -39,13 +40,14 @@ RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start="server,htt
 # 初始化jetty缓存
 ENV TMPDIR /tmp/jetty
 RUN mkdir -p "$TMPDIR" && \
-	chown -R jetty:jetty "$TMPDIR"
+	chown -R jetty:staff "$TMPDIR"
 
 WORKDIR $JETTY_BASE
 ADD supporting_files/docker-entrypoint.sh /docker-entrypoint.sh
 ADD supporting_files/generate-jetty-start.sh /generate-jetty-start.sh
-
-#TODO:兼容mattrayner/lamp的启动方式
+ADD supporting_files/start-jetty.sh /start-jetty.sh
+RUN chmod 755 /*.sh
+ADD supporting_files/supervisord-jetty.conf /etc/supervisor/conf.d/supervisord-jetty.conf
 
 EXPOSE 8080
 
@@ -53,5 +55,4 @@ EXPOSE 8080
 VOLUME  ["$JETTY_BASE/webapps"]
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["java","-jar","$JETTY_HOME/start.jar"]
 

@@ -1,0 +1,1 @@
+exec java -jar $JETTY_HOME/start.jar
