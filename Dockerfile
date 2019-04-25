@@ -9,10 +9,7 @@ ENV JAVA_URL=https://javadl.oracle.com/webapps/download/AutoDL?BundleId=238719_4
 
 RUN wget ${JAVA_URL} -O jre.tar.gz -q && \
   mkdir /java && \
-  tar -zxvf jre.tar.gz -C /java && \
-  echo 'export JAVA_HOME=/java/jre1.8.0_211' >> /etc/profile && \
-  echo 'export CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib' >> /etc/profile && \
-  echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
+  tar -zxvf jre.tar.gz -C /java
 
 ENV JAVA_HOME=/java/jre1.8.0_211
 ENV CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib
@@ -28,7 +25,10 @@ RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${J
   tar -zxvf jetty.tar.gz && \
   mv jetty-distribution-${JETTY_VERSION} jetty
 
-ENV JETTY_BASE /var/lib/jetty
+ENV JETTY_HOME /jetty
+ENV PATH $JETTY_HOME/bin:$PATH
+
+ENV JETTY_BASE /app/jetty
 RUN mkdir -p "$JETTY_BASE"
 WORKDIR $JETTY_BASE
 RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start="server,http,deploy,jsp,jstl,ext,resources,websocket"  && \
@@ -44,8 +44,8 @@ USER jetty
 EXPOSE 8080
 
 # Add volumes for the app
-VOLUME  ["/var/lib/jetty/webapps"]
+VOLUME  ["$JETTY_BASE/webapps"]
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["java","-jar","/usr/local/jetty/start.jar"]
+CMD ["java","-jar","$JETTY_HOME/start.jar"]
 
