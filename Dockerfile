@@ -7,7 +7,7 @@ ENV REFRESHED_AT 2019-04-17
 
 ENV JAVA_URL=https://javadl.oracle.com/webapps/download/AutoDL?BundleId=238719_478a62b7d4e34b78b671c754eaaf38ab
 
-RUN wget ${JAVA_URL} -O jre.tar.gz && \
+RUN wget ${JAVA_URL} -O jre.tar.gz -q && \
   mkdir /java && \
   tar -zxvf jre.tar.gz -C /java && \
   export JAVA_HOME=/java/jre1.8.0_211 && \
