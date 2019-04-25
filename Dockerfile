@@ -27,6 +27,8 @@ RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${J
 ENV JETTY_HOME /jetty
 ENV PATH $JETTY_HOME/bin:$PATH
 
+RUN groupadd -r jetty && useradd -r -g jetty jetty
+
 # 初始化jettybase
 ENV JETTY_BASE /jettybase
 RUN mkdir -p "$JETTY_BASE"
