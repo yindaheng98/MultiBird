@@ -14,4 +14,4 @@ A Combined Micro Service server based on nodejs and ubuntu-lamp, with a jetty co
 
 这个服务器镜像基于[mattrayner/lamp](https://hub.docker.com/r/mattrayner/lamp)的18.04版本，LAMP的使用方式不变。
 
-把要放进jetty的内容放进一个文件夹里然后用`-v`指令挂载到镜像的`/jetty/webapps`目录下，并且把8080端口映射到主机上。
+把要放进jetty的内容放进一个文件夹里然后用`-v`指令挂载到镜像的`/jettybase/webapps`目录下，并且把8080端口映射到主机上。

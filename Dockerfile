@@ -37,12 +37,13 @@ WORKDIR $JETTY_BASE
 RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start="server,http,deploy,jsp,jstl,ext,resources,websocket"  && \
 	chown -R jetty:jetty "$JETTY_BASE" 
 
+ADD webapps/ ${JETTY_BASE}/webapps
+
 # 初始化jetty缓存
 ENV TMPDIR /tmp/jetty
 RUN mkdir -p "$TMPDIR" && \
 	chown -R jetty:staff "$TMPDIR"
 
-WORKDIR $JETTY_BASE
 ADD supporting_files/docker-entrypoint.sh /docker-entrypoint.sh
 ADD supporting_files/generate-jetty-start.sh /generate-jetty-start.sh
 ADD supporting_files/start.sh /start.sh
@@ -51,10 +52,11 @@ RUN chmod 755 /*.sh
 #TODO:java不能用supervisord运行不知道怎么回事，暂时先用/generate-jetty-start.sh搞成后台程序
 #求大佬拯救
 
+WORKDIR $JETTY_BASE
 EXPOSE 8080
 
 # Add volumes for the app
-VOLUME  ["$JETTY_BASE/webapps"]
+VOLUME  ["/jettybase/webapps"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/start.sh"]
 
