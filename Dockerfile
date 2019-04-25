@@ -5,18 +5,20 @@ ENV REFRESHED_AT 2019-04-17
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
 
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+
 # Tweaks to give Apache/PHP write permissions to the app
 RUN groupadd -r jetty && useradd -r -g jetty jetty
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get install -y python-software-properties && \
+RUN apt-get install -y software-properties-common dirmngr && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get -y upgrade && \
   apt-get -y install oracle-java8-installer && \
-  apt-get install nodejs && \
-  apt-get install npm && \
+  apt-get install -y nodejs && \
+  apt-get install -y npm && \
   apt-get -y autoremove
 
 # install jetty
