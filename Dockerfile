@@ -10,13 +10,13 @@ ENV JAVA_URL=https://javadl.oracle.com/webapps/download/AutoDL?BundleId=238719_4
 RUN wget ${JAVA_URL} -O jre.tar.gz -q && \
   mkdir /java && \
   tar -zxvf jre.tar.gz -C /java && \
-  export JAVA_HOME=/java/jre1.8.0_211 && \
   echo 'export JAVA_HOME=/java/jre1.8.0_211' >> /etc/profile && \
-  export CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib && \
   echo 'export CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib' >> /etc/profile && \
-  export PATH=$JAVA_HOME/bin:$PATH && \
   echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
 
+ENV JAVA_HOME=/java/jre1.8.0_211
+ENV CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib
+ENV PATH=$JAVA_HOME/bin:$PATH
 RUN echo $JAVA_HOME
 
 # Tweaks to give Apache/PHP write permissions to the app
