@@ -10,8 +10,7 @@ RUN groupadd -r jetty && useradd -r -g jetty jetty
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt install -y software-properties-common dirmngr && \
-  add-apt-repository -y ppa:webupd8team/java && \
+RUN add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get -y upgrade && \
   apt-get -y install oracle-java8-installer && \
