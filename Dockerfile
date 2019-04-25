@@ -55,4 +55,6 @@ EXPOSE 8080
 # Add volumes for the app
 VOLUME  ["$JETTY_BASE/webapps"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/generate-jetty-start.sh"]
+CMD ["/generate-jetty-start.sh && /run.sh"]
+
+#nohup java -jar $JETTY_HOME/start.jar > log.file  2>&1 &
