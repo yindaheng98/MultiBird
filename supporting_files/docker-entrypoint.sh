@@ -107,3 +107,6 @@ if [ "${1##*/}" = java -a -n "$JAVA_OPTIONS" ] ; then
 fi
 
 exec "$@"
+
+echo '我加的'
+nohup java -jar $JETTY_HOME/start.jar > log.file  2>&1 &
