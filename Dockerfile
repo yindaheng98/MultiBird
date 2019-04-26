@@ -53,10 +53,10 @@ RUN chmod 755 /*.sh
 #求大佬拯救
 
 WORKDIR $JETTY_BASE
-EXPOSE 8080
+EXPOSE 8080 80 3306
 
 # Add volumes for the app
-VOLUME  ["/jettybase/webapps"]
+VOLUME  ["/jettybase/webapps", "/etc/mysql", "/var/lib/mysql", "/app"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/start.sh"]
 
