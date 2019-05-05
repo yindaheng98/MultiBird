@@ -13,7 +13,8 @@ ENV JAVA_URL=https://javadl.oracle.com/webapps/download/AutoDL?BundleId=238719_4
 
 RUN wget ${JAVA_URL} -O jre.tar.gz -q && \
   mkdir /java && \
-  tar -zxvf jre.tar.gz -C /java
+  tar -zxvf jre.tar.gz -C /java && \
+  rm -f jre.tar.gz
 
 ENV JAVA_HOME=/java/jre1.8.0_211
 ENV CLASSPATH=.:$JAVA_HOME:$JAVA_HOME/lib
@@ -24,7 +25,8 @@ RUN echo $JAVA_HOME
 ENV JETTY_VERSION=9.4.14.v20181114
 RUN wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${JETTY_VERSION}/jetty-distribution-${JETTY_VERSION}.tar.gz -O jetty.tar.gz -q && \
   tar -zxvf jetty.tar.gz && \
-  mv jetty-distribution-${JETTY_VERSION} jetty
+  mv jetty-distribution-${JETTY_VERSION} jetty && \
+  rm -f jetty.tar.gz
 
 # 装jetty
 ENV JETTY_HOME /jetty
@@ -36,8 +38,6 @@ RUN mkdir -p "$JETTY_BASE"
 WORKDIR $JETTY_BASE
 RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start="server,http,deploy,jsp,jstl,ext,resources,websocket"  && \
 	chown -R jetty:jetty "$JETTY_BASE" 
-
-ADD webapps/ ${JETTY_BASE}/webapps
 
 # 初始化jetty缓存
 ENV TMPDIR /tmp/jetty

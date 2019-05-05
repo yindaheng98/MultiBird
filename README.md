@@ -1,6 +1,6 @@
 # MultiBird
 
-A Combined Micro Service server based on nodejs and ubuntu-lamp, with a jetty container.
+A Combined Micro Service server based on ubuntu-lamp, with a jetty container.
 
 ## 这是什么
 
