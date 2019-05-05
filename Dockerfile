@@ -5,9 +5,6 @@ ENV REFRESHED_AT 2019-04-17
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
 
-RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-#作者疏忽，有个配置文件没改，导致外网连不上mysql
-
 RUN useradd -r jetty && \
     usermod -G staff jetty
 
