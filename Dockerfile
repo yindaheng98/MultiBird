@@ -52,6 +52,9 @@ RUN chmod 755 /*.sh
 #TODO:java不能用supervisord运行不知道怎么回事，暂时先用/generate-jetty-start.sh搞成后台程序
 #求大佬拯救
 
+RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+#作者疏忽，有个配置文件没改，导致外网连不上mysql
+
 WORKDIR $JETTY_BASE
 EXPOSE 8080 80 3306
 
