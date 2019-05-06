@@ -1,5 +1,7 @@
 #!/bin/sh
 
+mv /proxy_conf/proxy.conf /etc/apache2/mods-enabled/proxy.conf
+
 set -e
 
 if [ "$1" = jetty.sh ]; then

@@ -5,6 +5,11 @@ ENV REFRESHED_AT 2019-04-17
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
 
+RUN a2enmod proxy && \
+  a2enmod proxy_http
+
+ADD supporting_files/proxy_default /proxy_conf/proxy.conf
+
 RUN useradd -r jetty && \
     usermod -G staff jetty
 
@@ -56,7 +61,7 @@ WORKDIR $JETTY_BASE
 EXPOSE 8080 80 3306
 
 # Add volumes for the app
-VOLUME  ["/jettybase/webapps", "/etc/mysql", "/var/lib/mysql", "/app"]
+VOLUME  ["/jettybase/webapps", "/etc/mysql", "/var/lib/mysql", "/app", "/proxy_conf"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/start.sh"]
 
