@@ -5,10 +5,11 @@ ENV REFRESHED_AT 2019-04-17
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
 
-RUN a2enmod proxy && \
-  a2enmod proxy_http
-
+#配置反向代理
 ADD supporting_files/proxy_default /proxy_conf/proxy.conf
+RUN a2enmod proxy && \
+  a2enmod proxy_http && \
+  ln -s /proxy_conf/proxy.conf /etc/apache2/mods-enabled/proxy.conf
 
 RUN useradd -r jetty && \
     usermod -G staff jetty

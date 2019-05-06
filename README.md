@@ -14,4 +14,4 @@ A Combined Micro Service server based on ubuntu-lamp, with a jetty container.
 
 jetty的输出在`$JETTY_BASE/jetty.log`里
 
-把自定义的`proxy.conf`放在一个文件夹里然后用`docker run -v`指令挂载到镜像的`/proxy_conf`目录下，在启动时的entrypoint脚本里面`/proxy_conf/proxy.conf`会被移动到Apache2的mod配置目录
+把自定义的`proxy.conf`放在一个文件夹里然后用`docker run -v`指令挂载到镜像的`/proxy_conf`目录下，mod配置目录有一个指向`/proxy_conf/proxy.conf`的链接
