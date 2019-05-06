@@ -9,7 +9,7 @@ ENV REFRESHED_AT 2019-04-17
 ADD supporting_files/proxy_default /proxy_conf/proxy.conf
 RUN a2enmod proxy && \
   a2enmod proxy_http && \
-  ln -s /proxy_conf/proxy.conf /etc/apache2/mods-enabled/proxy.conf
+  ln -sf /proxy_conf/proxy.conf /etc/apache2/mods-enabled/proxy.conf
 
 RUN useradd -r jetty && \
     usermod -G staff jetty
