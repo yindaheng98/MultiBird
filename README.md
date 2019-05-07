@@ -10,6 +10,16 @@ This is a Combined Micro Service server based on [mattrayner/lamp:1804](https://
 
 And you can enable Apache2's reverse proxy to make a Combined Micro Service system.
 
+## Where to pull 如何获取
+
+pull from Dockerhub:从dockerhub获取👇
+
+    docker pull yindaheng98/multibird-cms
+
+pull from Aliyun:从阿里云获取👇
+
+    docker pull registry.cn-shanghai.aliyuncs.com/yindaheng98/multibird
+
 ## How to use it 怎么用
 
 这个服务器镜像基于[mattrayner/lamp](https://hub.docker.com/r/mattrayner/lamp)的18.04版本，LAMP的使用方式不变。
