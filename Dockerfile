@@ -1,6 +1,6 @@
 FROM mattrayner/lamp:latest-1804
 MAINTAINER Howard Yin <yindaheng98@163.com>
-ENV REFRESHED_AT 2019-04-17
+ENV REFRESHED_AT 2019-07-20
 
 # based on mattrayner/docker-lamp
 # MAINTAINER Matthew Rayner <hello@rayner.io>
@@ -65,5 +65,3 @@ EXPOSE 8080 80 3306
 VOLUME  ["/jettybase/webapps", "/etc/mysql", "/var/lib/mysql", "/app", "/proxy_conf"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/start.sh"]
-
-#nohup java -jar $JETTY_HOME/start.jar > log.file  2>&1 &
